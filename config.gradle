@@ -1,0 +1,18 @@
+ext {
+    libraries = [
+            supportVersion: "25.0.0",
+            retrofit      : "2.1.0",
+            rxandroid     : "1.2.1",
+            rxjava        : "1.2.1",
+            butterknife   : "8.4.0"
+    ]
+    configuration = [
+            package          : "com.neumeng.ganksister",
+            buildToolsVersion: "25.0.0",
+            compileVersion   : 25,
+            minSdk           : 15,
+            targetSdk        : 25,
+            version_code     : 1,
+            version_name     : "0.0.1"
+    ]
+}
