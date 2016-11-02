@@ -9,6 +9,7 @@ import com.neumeng.ganksister.service.GankService;
 public class ApiFactory {
     protected static final Object monitor = new Object();
     static GankService sGankService = null;
+    public static final int size = 20;
 
     public static GankService getGankServiceSingleton(){
         synchronized (monitor){

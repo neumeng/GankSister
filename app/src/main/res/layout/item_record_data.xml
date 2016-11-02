@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:padding="8dp"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp">
+    android:layout_margin="4dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/pic"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        tools:src="@mipmap/ic_launcher" />
+
 
     <TextView
+        android:layout_marginLeft="4dp"
+        android:layout_centerVertical="true"
         android:id="@+id/desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        tools:text="hello" />
-</android.support.v7.widget.CardView>
+        android:layout_toRightOf="@id/pic"
+        tools:text="Chrome 全文搜索历史浏览的插件（ 你只要记得你看过的页面的任何一个文字，都可以被检索出来！ ），刁刁的，超实用！" />
+</RelativeLayout>

@@ -1,5 +1,7 @@
 package com.neumeng.ganksister.bean;
 
+import java.util.List;
+
 /**
  * Created by koo on 2016/10/31.
  */
@@ -23,5 +25,5 @@ public class RecordData {
 
     public String who;
 
-//    public String images;
+    public List<String> images;
 }

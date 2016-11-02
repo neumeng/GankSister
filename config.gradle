@@ -4,7 +4,8 @@ ext {
             retrofit      : "2.1.0",
             rxandroid     : "1.2.1",
             rxjava        : "1.2.1",
-            butterknife   : "8.4.0"
+            butterknife   : "8.4.0",
+            glide         : "3.7.0"
     ]
     configuration = [
             package          : "com.neumeng.ganksister",

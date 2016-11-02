@@ -1,5 +1,8 @@
 package com.neumeng.ganksister.activity;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +13,11 @@ import android.widget.Toast;
 
 import com.neumeng.ganksister.ApiFactory;
 import com.neumeng.ganksister.R;
+import com.neumeng.ganksister.adapter.MainFragmentPagerAdapter;
 import com.neumeng.ganksister.adapter.RecordsAdapter;
 import com.neumeng.ganksister.bean.RecordData;
 import com.neumeng.ganksister.bean.RecordResult;
+import com.neumeng.ganksister.fragment.RecordsFragment;
 import com.neumeng.ganksister.service.GankService;
 
 import java.util.ArrayList;
@@ -29,18 +34,15 @@ import rx.schedulers.Schedulers;
  * 程序主界面
  */
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
-
-    private GankService gankService = ApiFactory.getGankServiceSingleton();
-
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecordsRv;
+    @BindView(R.id.pager)
+    ViewPager mPager;
+    @BindView(R.id.tabs)
+    TabLayout mTabs;
 
-    RecordsAdapter mAdapter;
-    List<RecordData> mRecordDatas;
+    MainFragmentPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,45 +50,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initActionBar();
-        initRecyclerView();
-        loadData();
+        initPagers();
+        initTabs();
     }
 
-    private void loadData() {
-        Log.e(TAG, "start");
-        gankService
-                .getRecords()
-                .subscribeOn(Schedulers.io())
-                .map(recordResult -> recordResult.results)
-                .map(recordDatas -> {
-                        List<RecordData> datas= new ArrayList<>();
-                            for (RecordData recordData:recordDatas
-                                 ) {
-                                if (!recordData.type.equals("福利")){
-                                    datas.add(recordData);
-                                }
+    private void initPagers() {
+        RecordsFragment androidFragment = RecordsFragment.newInstance("Android");
+        RecordsFragment iosFragment = RecordsFragment.newInstance("iOS");
+        RecordsFragment appFragment = RecordsFragment.newInstance("App");
 
-                            }
-                            return datas;
-                        }
-//                    recordDatas.stream().filter(recordData -> recordData.type.equals("福利")).into(new List<RecordData>());
-                )
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(recordDatas -> {
-                    mRecordDatas.clear();
-                    mRecordDatas.addAll(recordDatas);
-                    mAdapter.notifyDataSetChanged();
-                });
-        Log.e(TAG, "end");
+        mAdapter = new MainFragmentPagerAdapter(getSupportFragmentManager());
+        mAdapter.addFragment(androidFragment, "Android");
+        mAdapter.addFragment(iosFragment, "iOS");
+        mAdapter.addFragment(appFragment, "App");
+        mPager.setOffscreenPageLimit(2);//一共3个fragment，保持fragment不销毁
+        mPager.setAdapter(mAdapter);
     }
 
-    private void initRecyclerView() {
-        mRecordDatas = new ArrayList<>();
-        mAdapter = new RecordsAdapter(this, mRecordDatas);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecordsRv.setLayoutManager(manager);
-        mRecordsRv.setAdapter(mAdapter);
+    private void initTabs() {
+        mTabs.setupWithViewPager(mPager);
     }
+
 
     private void initActionBar() {
         if (mToolbar != null) {
@@ -94,7 +78,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    private Observable<List<RecordData>> getRecordDatas(RecordResult){
-//
-//    }
+
 }

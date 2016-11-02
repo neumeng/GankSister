@@ -15,8 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     final GankService gankService;
-
-
     ApiClient(){
         OkHttpClient client = new OkHttpClient();
         Gson gson = new GsonBuilder().serializeNulls().create();
