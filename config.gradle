@@ -1,11 +1,12 @@
 ext {
     libraries = [
-            supportVersion: "25.0.0",
-            retrofit      : "2.1.0",
-            rxandroid     : "1.2.1",
-            rxjava        : "1.2.1",
-            butterknife   : "8.4.0",
-            glide         : "3.7.0"
+            supportVersion   : "25.0.0",
+            retrofit         : "2.1.0",
+            rxandroid        : "1.2.1",
+            rxjava           : "1.2.1",
+            butterknife      : "8.4.0",
+            glide            : "3.7.0",
+            numberprogressbar: "1.2@aar"
     ]
     configuration = [
             package          : "com.neumeng.ganksister",

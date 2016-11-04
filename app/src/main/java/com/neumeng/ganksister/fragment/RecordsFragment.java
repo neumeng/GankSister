@@ -20,6 +20,7 @@ import com.neumeng.ganksister.bean.RecordData;
 import com.neumeng.ganksister.service.GankService;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -95,6 +96,7 @@ public class RecordsFragment extends Fragment {
 
     private void initRecyclerView() {
         mRecordDatas = new ArrayList<>();
+        mRecordDatas = new LinkedList<>();
         mAdapter = new RecordsAdapter(getActivity(), mRecordDatas);
         mAdapter.setOnClickListener((v, position) ->
                 startActivity(WebActivity.newIntent(getActivity(), mRecordDatas.get(position).url))

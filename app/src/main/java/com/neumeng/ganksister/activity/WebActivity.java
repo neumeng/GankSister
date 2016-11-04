@@ -11,6 +11,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.neumeng.ganksister.R;
 
 import butterknife.BindView;
@@ -21,8 +22,12 @@ public class WebActivity extends AppCompatActivity {
     private String mUrl;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.progress)
+    NumberProgressBar mProgress;
+
     @BindView(R.id.webView)
     WebView mWebView;
+
     public static Intent newIntent(Context context, String url) {
         Intent intent = new Intent(context, WebActivity.class);
         intent.putExtra(ARG_URL, url);
@@ -42,8 +47,8 @@ public class WebActivity extends AppCompatActivity {
         settings.setAppCacheEnabled(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
-        mWebView.setWebChromeClient(new WebChromeClient());
-        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.setWebChromeClient(new ChromeClient());
+        mWebView.setWebViewClient(new LoveClient());
 
         mWebView.loadUrl(mUrl);
     }
@@ -57,30 +62,33 @@ public class WebActivity extends AppCompatActivity {
     private void parseIntent(Intent intent) {
         mUrl = intent.getStringExtra(ARG_URL);
     }
-//    private class ChromeClient extends WebChromeClient {
-//
-//        @Override public void onProgressChanged(WebView view, int newProgress) {
-//            super.onProgressChanged(view, newProgress);
-////            mProgressbar.setProgress(newProgress);
-////            if (newProgress == 100) {
-////                mProgressbar.setVisibility(View.GONE);
-////            } else {
-////                mProgressbar.setVisibility(View.VISIBLE);
-////            }
-//        }
-//
-//
-////        @Override public void onReceivedTitle(WebView view, String title) {
-////            super.onReceivedTitle(view, title);
-////            setTitle(title);
-////        }
-//    }
-//
-//    private class LoveClient extends WebViewClient {
-//
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            if (url != null) view.loadUrl(url);
-//            return true;
-//        }
-//    }
+
+    private class ChromeClient extends WebChromeClient {
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            mProgress.setProgress(newProgress);
+            if (newProgress == 100) {
+                mProgress.setVisibility(View.GONE);
+            } else {
+                mProgress.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            setTitle(title);
+        }
+    }
+
+    //
+    private class LoveClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url != null) view.loadUrl(url);
+            return true;
+        }
+    }
 }
