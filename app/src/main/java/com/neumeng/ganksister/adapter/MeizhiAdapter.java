@@ -1,15 +1,16 @@
 package com.neumeng.ganksister.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.neumeng.ganksister.R;
 import com.neumeng.ganksister.bean.RecordData;
+import com.neumeng.ganksister.widget.RatioImageView;
 
 import java.util.List;
 
@@ -36,14 +37,26 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MyViewHold
 
     @Override
     public MeizhiAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_meizhi, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meizhi, parent, false);
         return new MeizhiAdapter.MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MeizhiAdapter.MyViewHolder holder, int position) {
         RecordData recordData = mRecordDatas.get(position);
-        Glide.with(mContext).load(recordData.url).into(holder.meizhi);
+        Glide.with(mContext)
+                .load(recordData.url)
+                .centerCrop()
+                .into(holder.meizhi)
+                .getSize(
+                        ((width, height) -> {
+                            if (!holder.meizhiCard.isShown()) {
+                                holder.meizhiCard.setVisibility(View.VISIBLE);
+                            }
+//                            holder.meizhi.setOriginalSize(width,height);
+                        })
+                )
+        ;
     }
 
     @Override
@@ -53,7 +66,9 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MyViewHold
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.meizhi)
-        ImageView meizhi;
+        RatioImageView meizhi;
+        @BindView(R.id.meizhi_card)
+        CardView meizhiCard;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +78,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MyViewHold
                     mOnClickListener.click(v, getAdapterPosition());
                 }
             });
+            meizhi.setOriginalSize(50, 50);
         }
     }
 
