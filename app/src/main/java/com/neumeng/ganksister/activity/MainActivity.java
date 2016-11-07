@@ -1,5 +1,6 @@
 package com.neumeng.ganksister.activity;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     ViewPager mPager;
     @BindView(R.id.tabs)
     TabLayout mTabs;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
 
     MainFragmentPagerAdapter mAdapter;
 
@@ -52,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
         initActionBar();
         initPagers();
         initTabs();
+        initFab();
+    }
+
+    private void initFab() {
+        mFab.setOnClickListener(view -> startActivity(MeizhiActivity.newIntent(MainActivity.this)));
     }
 
     private void initPagers() {

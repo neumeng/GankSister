@@ -16,6 +16,7 @@ import com.neumeng.ganksister.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class WebActivity extends AppCompatActivity {
     private static final String ARG_URL = "URL";

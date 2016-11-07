@@ -96,7 +96,6 @@ public class RecordsFragment extends Fragment {
 
     private void initRecyclerView() {
         mRecordDatas = new ArrayList<>();
-        mRecordDatas = new LinkedList<>();
         mAdapter = new RecordsAdapter(getActivity(), mRecordDatas);
         mAdapter.setOnClickListener((v, position) ->
                 startActivity(WebActivity.newIntent(getActivity(), mRecordDatas.get(position).url))

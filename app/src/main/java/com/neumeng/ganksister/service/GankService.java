@@ -12,8 +12,6 @@ import rx.Observable;
  */
 
 public interface GankService {
-    @GET("data/all/40/1")
-    Observable<RecordResult> getRecords();
 
     @GET("data/{type}/" + ApiFactory.size + "/{page}")
     Observable<RecordResult> getRecords(@Path("type") String type, @Path("page") int page);
